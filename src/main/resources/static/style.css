@@ -71,4 +71,41 @@ body { display: flex; flex-direction: column; font-family: Arial, sans-serif; ba
 .rodape h3 { color: #ffd700; }
 .rodape a { color: #b0e0e6; text-decoration: none; }
 .campo-pesquisa-oculto { display: none; margin-top: 15px; }
-.input-pesquisa { padding: 10px; width: 300px; border-radius: 5px; border: 1px solid #ccc; }
+.input-pesquisa { padding: 10px; width: 300px; border-radius: 5px; border: 1px solid #ccc; max-width: 90%; }
+
+/* --- NOVA SEÇÃO: RESPONSIVIDADE (CELULAR) --- */
+@media (max-width: 768px) {
+    #meu-titulo { font-size: 1.8em; } /* Título menor para não quebrar linha */
+    
+    .barra-de-pesquisa { padding: 15px; }
+    
+    .botoes-row { flex-direction: column; width: 100%; align-items: center; }
+    
+    .btn-pesquisa { width: 90%; margin: 5px 0; } /* Botões grandes para toque fácil */
+    
+    .input-pesquisa { width: 90%; }
+    
+    /* Scroll lateral na tabela para os dados não ficarem espremidos */
+    #area-resultados {
+        overflow-x: auto;
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .tabela-resultados {
+        min-width: 700px; /* Mantém a tabela legível, forçando o scroll horizontal */
+    }
+
+    .rodape {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+        gap: 20px;
+    }
+    
+    .secao-cadastro {
+        width: 90%;
+        margin: 10px auto;
+    }
+}
