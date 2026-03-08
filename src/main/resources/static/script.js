@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Referências do DOM
+    // AJUSTE: Mude para o seu link do Render
+    const BASE_URL = 'https://seaa-app-spring.onrender.com'; 
+
     const btnGerarPdf = document.getElementById('btn-gerar-pdf');
     const resultadosDiv = document.getElementById('area-resultados');
     const areaInsercao = document.getElementById('area-insercao');
@@ -19,14 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
         btnGerarPdf.style.display = 'none';
     }
 
-    // --- CONTROLES DE MENU ---
     document.getElementById('btn-turma').addEventListener('click', () => { resetInterface(); campos.turma.container.style.display = 'block'; });
     document.getElementById('btn-nome').addEventListener('click', () => { resetInterface(); campos.nome.container.style.display = 'block'; });
     document.getElementById('btn-processo').addEventListener('click', () => { resetInterface(); campos.processo.container.style.display = 'block'; });
     document.getElementById('btn-inserir').addEventListener('click', () => { resetInterface(); areaInsercao.style.display = 'block'; });
     document.getElementById('btn-inserir-devolutiva').addEventListener('click', () => { resetInterface(); areaInsercaoDevolutiva.style.display = 'block'; });
 
-    // Gatilhos de busca ao apertar Enter
     Object.values(campos).forEach(campo => {
         campo.input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') fazerPesquisa(campo.input.value, campo.endpoint);
@@ -38,11 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
         fazerPesquisa('', '/api/pesquisa-avancada');
     });
 
-    // --- FUNÇÕES DE COMUNICAÇÃO (FETCH) ---
-
     function fazerPesquisa(termo, endpoint) {
         resultadosDiv.innerHTML = '<p>Buscando dados no sistema...</p>';
-        fetch('http://localhost:8080' + endpoint, {
+        fetch(BASE_URL + endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ termo: termo })
@@ -63,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return; 
         }
 
+        // CORREÇÃO: Adicionada a coluna "Encaminhamento" no cabeçalho
         let html = `
             <h3 style="text-align:center">Relatório de Acompanhamento</h3>
             <table class="tabela-resultados" id="tabela-relatorio">
@@ -73,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <th>Turma</th>
                         <th>Data Devolutiva</th>
                         <th>Comentário</th>
+                        <th>Encaminhamento</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -83,11 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? new Date(item.data_devolutiva).toLocaleDateString('pt-BR', {timeZone: 'UTC'}) 
                 : '<span style="color:orange">Pendente</span>';
 
-            // Botão Excluir só aparece se houver uma devolutiva vinculada
-            const botaoExcluir = item.comentario !== "Sem registro" 
+            const botaoExcluir = item.id_devolutiva 
                 ? `<button onclick="window.excluirDevolutiva(${item.id_devolutiva})" class="btn-excluir-tabela">Excluir</button>`
                 : '---';
 
+            // CORREÇÃO: Incluída a célula ${item.encaminhamento_especialista}
             html += `
                 <tr>
                     <td>${item.id}</td>
@@ -95,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${item.turma}</td>
                     <td>${data}</td>
                     <td>${item.comentario}</td>
+                    <td>${item.encaminhamento_especialista || '---'}</td>
                     <td>${botaoExcluir}</td>
                 </tr>`;
         });
@@ -103,21 +104,18 @@ document.addEventListener('DOMContentLoaded', () => {
         btnGerarPdf.style.display = 'flex';
     }
 
-    // --- FUNÇÕES DE EXCLUSÃO ---
     window.excluirDevolutiva = function(idDevolutiva) {
         if (!idDevolutiva) return;
         if (confirm("Deseja excluir permanentemente esta devolutiva?")) {
-            fetch(`http://localhost:8080/api/excluir-devolutiva/${idDevolutiva}`, { method: 'DELETE' })
+            fetch(`${BASE_URL}/api/excluir-devolutiva/${idDevolutiva}`, { method: 'DELETE' })
             .then(res => {
                 if (!res.ok) throw new Error();
                 alert("Excluída com sucesso!");
-                document.getElementById('btn-avancada').click(); // Atualiza a tabela
+                document.getElementById('btn-avancada').click(); 
             })
             .catch(() => alert("Erro ao excluir."));
         }
     };
-
-    // --- FORMULÁRIOS DE INSERÇÃO ---
 
     document.getElementById('form-insercao').addEventListener('submit', (e) => {
         e.preventDefault();
@@ -128,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dataEnvio: document.getElementById('input-data-envio').value,
             contato: document.getElementById('input-contato').value
         };
-        fetch('http://localhost:8080/api/inserir-aluno', {
+        fetch(BASE_URL + '/api/inserir-aluno', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
@@ -143,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
             comentario: document.getElementById('input-comentario').value,
             encaminhamentoEspecialista: document.getElementById('input-encaminhamento').value
         };
-        fetch('http://localhost:8080/api/inserir-devolutiva', {
+        fetch(BASE_URL + '/api/inserir-devolutiva', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
@@ -153,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(() => alert("Erro ao salvar. Verifique o ID do aluno."));
     });
 
-    // --- PDF ---
     btnGerarPdf.addEventListener('click', () => {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF('l', 'mm', 'a4');
