@@ -127,7 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Excluir Aluno Completo (Botão Central por ID)
     document.getElementById('btn-excluir-aluno').addEventListener('click', () => {
-        const id = document.getElementById('input-id-excluir').value;
+        const inputId = document.getElementById('input-id-excluir');
+        const id = inputId.value;
+
         if (!id) {
             alert("Por favor, digite o ID do aluno para excluir.");
             return;
@@ -138,7 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(res => {
                 if (res.ok) {
                     alert("Aluno e histórico removidos com sucesso!");
-                    document.getElementById('input-id-excluir').value = '';
+                    
+                    // MUDANÇA APLICADA: Limpa o campo de ID após a exclusão
+                    inputId.value = ''; 
+                    
                     if(resultadosDiv.innerHTML !== '') document.getElementById('btn-avancada').click();
                 } else {
                     alert("Erro: Aluno não encontrado.");
@@ -153,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Salvar Novo Aluno
     document.getElementById('form-insercao').addEventListener('submit', (e) => {
         e.preventDefault();
+        const form = e.target;
         const dados = {
             nomeAluno: document.getElementById('input-nome').value,
             turma: document.getElementById('input-turma-insercao').value,
@@ -168,6 +174,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(res => {
             if(!res.ok) throw new Error();
             alert("Aluno cadastrado com sucesso!");
+            
+            // MELHORIA: Limpa o formulário após salvar
+            form.reset(); 
             resetInterface();
         })
         .catch(() => alert("Erro ao salvar aluno."));
@@ -176,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Salvar Nova Devolutiva
     document.getElementById('form-insercao-devolutiva').addEventListener('submit', (e) => {
         e.preventDefault();
+        const form = e.target;
         const dados = {
             alunoId: document.getElementById('input-aluno-id').value,
             dataDevolutiva: document.getElementById('input-data-devolutiva').value,
@@ -193,6 +203,9 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(() => { 
             alert("Devolutiva registrada!"); 
+            
+            // MELHORIA: Limpa o formulário após salvar
+            form.reset(); 
             resetInterface(); 
         })
         .catch(() => alert("Erro ao salvar. Verifique se o ID do aluno está correto."));
