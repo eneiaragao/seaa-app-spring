@@ -61,53 +61,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Montagem da tabela de resultados
-    function exibirTabela(dados) {
-        if (!dados || dados.length === 0) { 
-            resultadosDiv.innerHTML = '<p>Nenhum registro encontrado.</p>'; 
-            return; 
-        }
-
-        let html = `
-            <h3 style="text-align:center">Relatório de Acompanhamento</h3>
-            <table class="tabela-resultados" id="tabela-relatorio">
-                <thead>
-                    <tr>
-                        <th>ID Aluno</th>
-                        <th>Nome</th>
-                        <th>Turma</th>
-                        <th>Data Devolutiva</th>
-                        <th>Comentário</th>
-                        <th>Encaminhamento</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-
-        dados.forEach(item => {
-            const data = item.data_devolutiva 
-                ? new Date(item.data_devolutiva).toLocaleDateString('pt-BR', {timeZone: 'UTC'}) 
-                : '<span style="color:orange">Pendente</span>';
-
-            // Botão para excluir apenas a linha da devolutiva específica
-            const botaoExcluirDev = item.id_devolutiva 
-                ? `<button onclick="window.excluirDevolutiva(${item.id_devolutiva})" class="btn-excluir-tabela">Excluir Histórico</button>`
-                : '---';
-
-            html += `
-                <tr>
-                    <td>${item.id}</td>
-                    <td><strong>${item.nome_aluno}</strong></td>
-                    <td>${item.turma}</td>
-                    <td>${data}</td>
-                    <td>${item.comentario}</td>
-                    <td>${item.encaminhamento_especialista || '---'}</td>
-                    <td>${botaoExcluirDev}</td>
-                </tr>`;
-        });
-
-        resultadosDiv.innerHTML = html + '</tbody></table>';
-        btnGerarPdf.style.display = 'flex';
+   // Montagem da tabela de resultados
+function exibirTabela(dados) {
+    if (!dados || dados.length === 0) { 
+        resultadosDiv.innerHTML = '<p>Nenhum registro encontrado.</p>'; 
+        return; 
     }
+
+    let html = `
+        <h3 style="text-align:center">Relatório de Acompanhamento</h3>
+        <table class="tabela-resultados" id="tabela-relatorio">
+            <thead>
+                <tr>
+                    <th>ID Aluno</th>
+                    <th>Nome</th>
+                    <th>Processo SEI</th> <th>Turma</th>
+                    <th>Data Devolutiva</th>
+                    <th>Comentário</th>
+                    <th>Encaminhamento</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+    dados.forEach(item => {
+        const data = item.data_devolutiva 
+            ? new Date(item.data_devolutiva).toLocaleDateString('pt-BR', {timeZone: 'UTC'}) 
+            : '<span style="color:orange">Pendente</span>';
+
+        const botaoExcluirDev = item.id_devolutiva 
+            ? `<button onclick="window.excluirDevolutiva(${item.id_devolutiva})" class="btn-excluir-tabela">Excluir Histórico</button>`
+            : '---';
+
+        html += `
+            <tr>
+                <td>${item.id}</td>
+                <td><strong>${item.nome_aluno}</strong></td>
+                <td>${item.numero_processo_sei || '---'}</td> <td>${item.turma}</td>
+                <td>${data}</td>
+                <td>${item.comentario}</td>
+                <td>${item.encaminhamento_especialista || '---'}</td>
+                <td>${botaoExcluirDev}</td>
+            </tr>`;
+    });
+
+    resultadosDiv.innerHTML = html + '</tbody></table>';
+    btnGerarPdf.style.display = 'flex';
+}
 
     // --- FUNÇÕES DE EXCLUSÃO ---
 
