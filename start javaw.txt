@@ -1,0 +1,22 @@
+@echo off
+set PORT=8080
+set PROJECT_DIR=C:\Caminho\Para\Seu\Projeto\seaa-app
+set JAR_NAME=seaa-app-0.0.1-SNAPSHOT.jar
+
+:: Verifica se a porta 8080 está em uso
+netstat -ano | findstr :%PORT% > nul
+
+if %errorlevel% equ 0 (
+    echo Desligando aplicacao na porta %PORT%...
+    for /f "tokens=5" %%a in ('netstat -aon ^| findstr :%PORT%') do taskkill /F /PID %%a
+    echo Aplicacao encerrada com sucesso!
+    pause
+) else (
+    echo Ligando aplicacao...
+    cd /d %PROJECT_DIR%
+    :: Comando para rodar o Spring Boot (pode ser via Maven ou o JAR direto)
+    start javaw -jar target\%JAR_NAME%
+    echo Aplicacao esta subindo em segundo plano!
+    echo Acesse: http://localhost:8080/h2-console
+    pause
+)

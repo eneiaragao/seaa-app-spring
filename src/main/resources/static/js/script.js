@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // URL do seu backend no Render
-    const BASE_URL = 'https://seaa-app-spring.onrender.com'; 
+    //const BASE_URL = 'https://seaa-app-spring.onrender.com'; 
+    const BASE_URL = 'http://localhost:8080';
 
     const btnGerarPdf = document.getElementById('btn-gerar-pdf');
     const resultadosDiv = document.getElementById('area-resultados');
