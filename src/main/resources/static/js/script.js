@@ -108,6 +108,8 @@ function exibirTabela(dados) {
 
     resultadosDiv.innerHTML = html + '</tbody></table>';
     btnGerarPdf.style.display = 'flex';
+    // ADICIONE ESTA LINHA para a tela descer um pouco e mostrar que a tabela apareceu
+    resultadosDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
     // --- FUNÇÕES DE EXCLUSÃO ---

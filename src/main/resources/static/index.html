@@ -14,21 +14,26 @@
 
     <header class="minha-div-estilizada">
         <a href="#" class="link-da-div">
+             <img src="logo_cef-02.jpeg" alt="Logo" class="logo-rodape">
             <h1 id="meu-titulo">SEAA-PEDAGOGO / CEF 02 ARAPOANGA</h1>
         </a>
     </header>
 
     <section class="barra-de-pesquisa">
-        <h2>Opções de Pesquisa</h2>
+        
         <div class="botoes-row">
-            <button class="btn-pesquisa" id="btn-turma">Pesquisar por Turma</button>
-            <button class="btn-pesquisa" id="btn-nome">Pesquisar por Nome</button>
-            <button class="btn-pesquisa" id="btn-processo">Pesquisar por Processo</button>
-            <button class="btn-pesquisa btn-amarelo" id="btn-avancada">Pesquisa Avançada (Tudo)</button>
-            <button class="btn-pesquisa btn-verde" id="btn-inserir">+ Inserir Novo Aluno</button>
-            <button class="btn-pesquisa btn-ciano" id="btn-inserir-devolutiva">+ Inserir Devolutiva</button>
+            
+        <button id="btn-gerar-pdf" class="btn-pdf-padrao">📄GerarPDF</button>
+    
+            <h2>Opções de Pesquisa</h2>
+            <button class="btn-pesquisa" id="btn-turma">Pesquisa Turma</button>
+            <button class="btn-pesquisa" id="btn-nome">Pesquisa Nome</button>
+            <button class="btn-pesquisa" id="btn-processo">Pesquisar Processo</button>
+            <button class="btn-pesquisa btn-amarelo" id="btn-avancada">Pesquisa Avançada</button>
+            <button class="btn-pesquisa btn-verde" id="btn-inserir">+ Inserir Aluno</button>
+            <button class="btn-pesquisa btn-ciano" id="btn-inserir-devolutiva">Inserir Devolutiva</button>
         </div>
-
+        
         <div id="campo-pesquisa-turma" class="campo-pesquisa-oculto">
             <input type="text" id="input-turma" placeholder="Ex: 8º C" class="input-pesquisa">
         </div>
@@ -68,28 +73,21 @@
         </form>
     </section>
 
-    <div class="container-pdf">
-        <button id="btn-gerar-pdf" class="btn-pdf-padrao">📄 Gerar Relatório PDF</button>
-    </div>
+    
 
     <main id="area-resultados"></main>
 
     <footer class="rodape">
-        <div class="rodape-coluna">
-            <img src="logo_cef-02.jpeg" alt="Logo" class="logo-rodape">
-            <h3>Redes Sociais</h3>
-            <p><a href="https://www.instagram.com/cef.02doarapoanga/#">Instagram</a></p>
-        </div>
-        <div class="rodape-coluna">
-            <h3>Contato</h3>
-            <p>Telefone: (61) 3901-7613</p>
-            <p>Email: cef02arapoanga@gmail.com</p>
-        </div>
-        <div class="rodape-coluna">
-            <h3>Localização</h3>
-            <p>Planaltina/DF - Arapoanga</p>
-        </div>
-    </footer>
+    <!-- Logo na margem esquerda -->
+   
+
+    <!-- Informações em 3 linhas ao lado -->
+    <div class="rodape-infos">
+        <p><strong>Redes Sociais:</strong> <a href="https://www.instagram.com/cef.02doarapoanga/#">Instagram (@cef.02doarapoanga)</a></p>
+        <p><strong>Contato:</strong> (61) 3901-7613 | cef02arapoanga@gmail.com</p>
+        <p><strong>Localização:</strong> Planaltina/DF - Arapoanga</p>
+    </div>
+</footer>
 
    <script src="js/script.js"></script>
 </body>
