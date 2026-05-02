@@ -19,6 +19,13 @@ target/
 *.iml
 *.ipr
 
+
+###dados###
+/dados/*.db
+/biuld_para-instalacao/dados/*.db
+target/
+*.log
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
