@@ -3,12 +3,165 @@ html, body { height: 100%; margin: 0; padding: 0; }
 
 /*body { display: flex; flex-direction: column; font-family: Arial, sans-serif; background-color: #f0f2f5; }
 */
-body {
+/*body {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Ocupa exatamente a altura da tela */
+    /*height: 100vh; /* Ocupa exatamente a altura da tela */
+    /*margin: 0;*/
+   /* overflow: hidden; /* Remove o scroll da página inteira */
+/*}/*
+body {
+    font-family: Arial;
+    background-color: #f0f2f5;
     margin: 0;
-    overflow: hidden; /* Remove o scroll da página inteira */
+}
+/* Empurra o conteúdo pra não ficar escondido */
+/*body {
+    margin-left: 60px;
+    transition: margin-left 0.3s;
+}*/
+body {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+
+    margin: 0;
+    margin-left: 60px;
+
+    transition: margin-left 0.3s;
+
+    overflow: hidden;
+}
+
+/* TOPO */
+.topo {
+    background: #5d0452;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* BOTÕES */
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+
+.btn-voltar { background: #6c757d; color: white; }
+.btn-buscar { background: #007bff; color: white; }
+.btn-pdf { background: #28a745; color: white; }
+
+/* FORM */
+/*.container {
+    max-width: 700px;
+    margin: 30px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+}*/
+.container {
+    overflow-y: auto; 
+    overflow-x: auto; /* Habilita o scroll interno se necessário */
+    width: 90%;
+    max-width: 900px;
+    height: 60vh; /* Ajuste este valor para a altura desejada (vh é relativo à tela) */
+    margin: 10px auto;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    height: auto;
+    /* Faz o conteúdo interno se alinhar verticalmente */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribui o espaço entre os elementos */
+}
+
+
+/*input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 10px 20px 20px;
+    border: 4px solid red;
+}*/
+
+#form-conselho {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Espaço pequeno entre os campos */
+    background-color: transparent !important; /* Remove aquele azul/preto do fundo */
+}
+
+input, textarea {
+    width: 100%;
+    padding: 8px; /* Padding menor para o box ser mais baixo */
+    margin: 0;    /* Remove margens que empurram os itens para baixo */
+    box-sizing: border-box;
+}
+
+h3 {
+    margin-top: 0; /* Faz o título "Novo Registro" colar no topo do card */
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+/* RESULTADOS */
+#resultado-comentarios {
+    flex: 1;              /* ocupa o espaço restante */
+    overflow: hidden;     /* ❗ impede scroll aqui */
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 60px;
+    background-color: #2c3e50;
+    overflow: hidden;
+    transition: width 0.3s;
+    z-index: 999;
+}
+
+/* EXPANDE AO PASSAR O MOUSE */
+.menu-lateral:hover {
+    width: 220px;
+}
+
+.menu-lateral ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-lateral li {
+    padding: 20px 10px;
+}
+
+.menu-lateral a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    white-space: nowrap;
+    display: block;
+}
+
+
+.menu-lateral:hover ~ * {
+    margin-left: 220px;
 }
 /* CABEÇALHO COM ANIMAÇÃO PÊNDULO */
 .minha-div-estilizada {
@@ -114,7 +267,25 @@ table {
      box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
      border-left: 6px solid #5d0452; 
     }
+.secao-cadastro h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+    color: #000;
+    
+}
 
+/* Estilo específico para o botão dentro do formulário (estilo pílula do print) */
+.btn-form-salvar {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px; /* Formato pílula */
+    color: white;
+    font-weight: bold;
+    background-color: #007bff;
+    cursor: pointer;
+    transition: 0.3s;
+}
 .input-form { width: 90%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
 
 /* BOTÃO PDF CENTRALIZADO (PÍLULA) *//*.container-pdf { 
@@ -135,6 +306,30 @@ table {
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.tabela-container {
+    flex: 1;              /* ocupa todo espaço disponível */
+    overflow-y: auto;     /* ✔ SCROLL SÓ AQUI */
+    overflow-x: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* tabela mais bonita */
+.tabela-bonita {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+
+/* cabeçalho fixo (opcional, mas MUITO bom) */
+.tabela-bonita thead th {
+    position: sticky;
+    top: 0;
+    background: #5d0452;
+    color: white;
 }
 
 /* TABELA E FOOTER */
@@ -248,7 +443,7 @@ table {
         width: 90%; 
         margin: 5px 0; 
         padding: 15px; /* Botão mais "gordinho" para o dedo */
-    } */
+     
 
     .input-pesquisa { width: 90%; }
 

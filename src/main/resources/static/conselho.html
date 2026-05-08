@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Conselho de Classe</title>
+<link rel="stylesheet" href="/css/style.css">
+
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+<style>
+
+
+
+</style>
+</head>
+
+<body>
+
+<div class="topo">
+    <h2>📋 Conselho de Classe</h2>
+    
+    <div>
+        <input type="text" id="filtro-nome" placeholder="Pesquisar por nome..." onkeyup="filtrarNome()">
+        <button class="btn btn-voltar" onclick="voltar()">⬅ Voltar</button>
+        <button class="btn btn-buscar" onclick="buscarComentarios()">📊 Comentários</button>
+        <button class="btn btn-pdf" onclick="gerarPDF()">📄 PDF</button>
+    </div>
+</div>
+
+<div class="container">
+    <h3>Novo Registro</h3>
+
+    <form id="form-conselho">
+        
+        <input type="text" id="nome" placeholder="Nome do aluno" required>
+        <input type="text" id="turma" placeholder="Turma" required>
+        <textarea id="observacao" placeholder="Observações"></textarea>
+
+        <button class="btn btn-buscar" type="submit">Salvar</button>
+    </form>
+</div>
+
+<div id="resultado-comentarios"></div>
+
+<script src="js/conselho.js"></script>
+</body>
+</html>

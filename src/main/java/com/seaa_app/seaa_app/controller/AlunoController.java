@@ -124,4 +124,16 @@ public class AlunoController {
         }
         return ResponseEntity.status(404).body(Map.of("error", "Devolutiva não encontrada."));
     }
+
+
+   @PatchMapping("/atualizar-turma/{id}")
+public ResponseEntity<?> atualizarTurma(@PathVariable Long id, @RequestBody Map<String, String> body) {
+    return repo.findById(id) // Use "repo" em vez de "alunoRepository"
+        .map(aluno -> {
+            aluno.setTurma(body.get("turma"));
+            repo.save(aluno); // Use "repo" aqui também
+            return ResponseEntity.ok(Map.of("message", "Turma atualizada com sucesso!"));
+        })
+        .orElse(ResponseEntity.notFound().build());
+}
 }

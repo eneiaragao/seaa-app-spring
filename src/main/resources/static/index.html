@@ -11,8 +11,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
+    
 
     <header class="minha-div-estilizada">
+        <div class="menu-lateral">
+    <ul>
+        <li>
+            <a href="index.html">🏠 Início</a>
+        </li>
+        <li>
+            <a href="conselho.html">📋 Conselho de Classe</a>
+        </li>
+    </ul>
+</div>
         <a href="#" class="link-da-div">
              <img src="logo_cef-02.jpeg" alt="Logo" class="logo-rodape">
             <h1 id="meu-titulo">SEAA-PEDAGOGO / CEF 02 ARAPOANGA</h1>
@@ -25,7 +36,7 @@
             
         <button id="btn-gerar-pdf" class="btn-pdf-padrao">📄GerarPDF</button>
     
-            <h2>Opções de Pesquisa</h2>
+            <button class="btn-pesquisa" id="btn-alterar-turma">Alterar Turma</button>
             <button class="btn-pesquisa" id="btn-turma">Pesquisa Turma</button>
             <button class="btn-pesquisa" id="btn-nome">Pesquisa Nome</button>
             <button class="btn-pesquisa" id="btn-processo">Pesquisar Processo</button>
@@ -50,7 +61,7 @@
         <button id="btn-excluir-aluno" class="btn-vermelho">🗑️ Excluir por ID</button>
     </section>
 
-    <section id="area-insercao" class="secao-cadastro" style="display:none;">
+    <section id="area-insercao" class="secao-cadastro tela" style="display:none;">
         <h3>Cadastro de Novo Aluno</h3>
         <form id="form-insercao">
             <input type="text" id="input-nome" placeholder="Nome Completo" required class="input-form">
@@ -62,7 +73,7 @@
         </form>
     </section>
 
-    <section id="area-insercao-devolutiva" class="secao-cadastro" style="display:none;">
+    <section id="area-insercao-devolutiva" class="secao-cadastro tela" style="display:none;">
         <h3>Registrar Devolutiva</h3>
         <form id="form-insercao-devolutiva">
             <input type="number" id="input-aluno-id" placeholder="ID do Aluno" required class="input-form">
@@ -72,6 +83,29 @@
             <button type="submit" class="btn-pesquisa btn-ciano">Salvar Devolutiva</button>
         </form>
     </section>
+
+   <!-- Seção de Alterar Turma -->
+   <section id="area-alterar-turma" class="secao-cadastro tela" style="display:none;">
+           <h3>Alterar Turma ou Situação</h3>
+           <form id="form-alterar-turma">
+           <div class="grupo-input">
+            <label for="input-turma-aluno-id">ID do Aluno:</label>
+            <input type="number" id="input-turma-aluno-id" placeholder="Ex: 123" required class="input-form">
+            </div>
+        
+        <div class="grupo-input">
+            <label for="input-turma-nova">Nova Turma / Destino:</label>
+            <input type="text" id="input-turma-nova" placeholder="Ex: 9º C ou TRANSFERIDO" required class="input-form">
+        </div>
+
+        <div class="grupo-input">
+            <label for="input-turma-obs">Observação:</label>
+            <textarea id="input-turma-obs" placeholder="Motivo da alteração..." class="input-form" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn-form-salvar btn-roxo">Confirmar Alteração</button>
+    </form>
+</section>
 
     
 

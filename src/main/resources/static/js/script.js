@@ -7,35 +7,77 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultadosDiv = document.getElementById('area-resultados');
     const areaInsercao = document.getElementById('area-insercao');
     const areaInsercaoDevolutiva = document.getElementById('area-insercao-devolutiva');
+    const areaAlterarTurma = document.getElementById('area-alterar-turma');
 
     const campos = {
         turma: { container: document.getElementById('campo-pesquisa-turma'), input: document.getElementById('input-turma'), endpoint: '/api/pesquisa-turma' },
         nome: { container: document.getElementById('campo-pesquisa-nome'), input: document.getElementById('input-nome-aluno'), endpoint: '/api/pesquisa-nome' },
-        processo: { container: document.getElementById('campo-pesquisa-processo'), input: document.getElementById('input-processo'), endpoint: '/api/pesquisa-processo' }
-    };
+        processo: { container: document.getElementById('campo-pesquisa-processo'), input: document.getElementById('input-processo'), endpoint: '/api/pesquisa-processo' },
+        alterar: { container: document.getElementById('area-alterar-turma'), input: null, endpoint: null }
+};
 
     // Função para limpar a tela ao trocar de opção
-    function resetInterface() {
-        Object.values(campos).forEach(c => { c.container.style.display = 'none'; });
-        areaInsercao.style.display = 'none';
-        areaInsercaoDevolutiva.style.display = 'none';
-        resultadosDiv.innerHTML = '';
-        btnGerarPdf.style.display = 'none';
-    }
+  function resetInterface() {
+    document.querySelectorAll('.tela').forEach(t => t.style.display = 'none');
 
+    Object.values(campos).forEach(c => { 
+        if (c.container) c.container.style.display = 'none'; 
+    });
+
+    resultadosDiv.innerHTML = '';
+    btnGerarPdf.style.display = 'none';
+}
     // Eventos dos botões de navegação
     document.getElementById('btn-turma').addEventListener('click', () => { resetInterface(); campos.turma.container.style.display = 'block'; });
     document.getElementById('btn-nome').addEventListener('click', () => { resetInterface(); campos.nome.container.style.display = 'block'; });
     document.getElementById('btn-processo').addEventListener('click', () => { resetInterface(); campos.processo.container.style.display = 'block'; });
-    document.getElementById('btn-inserir').addEventListener('click', () => { resetInterface(); areaInsercao.style.display = 'block'; });
-    document.getElementById('btn-inserir-devolutiva').addEventListener('click', () => { resetInterface(); areaInsercaoDevolutiva.style.display = 'block'; });
+    document.getElementById('btn-inserir').addEventListener('click', () => {
+    mostrarTela('area-insercao');
+});
+
+document.getElementById('btn-inserir-devolutiva').addEventListener('click', () => {
+    mostrarTela('area-insercao-devolutiva');
+});
+
+document.getElementById('btn-alterar-turma').addEventListener('click', () => {
+    mostrarTela('area-alterar-turma');
+});
+ //logica para alterar a turma do aluno
+    // Lógica de envio (AJAX)
+// Lógica para alterar a turma do aluno
+document.getElementById('form-alterar-turma').addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const idAluno = document.getElementById('input-turma-aluno-id').value;
+    const dados = {
+        turma: document.getElementById('input-turma-nova').value
+        // Se quiser enviar a observação, o backend precisaria estar preparado para receber
+    };
+
+    // Ajustado para o endpoint correto do seu Java: /api/atualizar-turma/{id}
+    fetch(BASE_URL + '/api/atualizar-turma/' + idAluno, { 
+        method: 'PATCH', // Mudado de PUT para PATCH conforme seu Java
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados)
+    })
+    .then(res => {
+        if(!res.ok) throw new Error();
+        alert("Turma atualizada com sucesso!");
+        e.target.reset();
+        resetInterface();
+    })
+    .catch(() => alert("Erro ao alterar turma. Verifique o ID."));
+});
+
 
     // Configuração de pesquisa ao apertar Enter
     Object.values(campos).forEach(campo => {
+    if (campo.input) {
         campo.input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') fazerPesquisa(campo.input.value, campo.endpoint);
         });
-    });
+    }
+});
 
     // Pesquisa Avançada (Tudo)
     document.getElementById('btn-avancada').addEventListener('click', () => {
@@ -227,4 +269,22 @@ function exibirTabela(dados) {
         });
         doc.save("Relatorio_Arapoanga.pdf");
     });
+
+
+    function mostrarTela(idTela) {
+    // esconde todas
+    document.querySelectorAll('.tela').forEach(t => {
+        t.style.display = 'none';
+    });
+
+    // mostra a escolhida
+    const tela = document.getElementById(idTela);
+    if (tela) {
+        tela.style.display = 'block';
+    }
+
+    // limpa resultados
+    resultadosDiv.innerHTML = '';
+    btnGerarPdf.style.display = 'none';
+}
 });
