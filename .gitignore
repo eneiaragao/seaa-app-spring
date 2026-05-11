@@ -34,3 +34,21 @@ build/
 
 ### VS Code ###
 .vscode/
+
+/*.db
+/*.lock.db
+/*.trace.db
+
+# Banco de dados
+*.db
+*.lock.db
+*.trace.db
+
+# Build
+target/
+
+# Java portátil
+biuld_para-instalacao/java/
+
+# JAR gerado
+biuld_para-instalacao/*.jar
